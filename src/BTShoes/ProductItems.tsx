@@ -1,7 +1,9 @@
 import React from "react";
+import ProductDetail from "./ProductDetail";
 
 const ProductItems = (props: any) => {
-  const { shoes, onViewDetail } = props;
+  const { shoes,handleProDetail } = props;
+
   return (
     <div className="grid justify-center space-y-3 m-2 border p-4 border-gray-200 rounded-lg ">
       <img
@@ -14,10 +16,9 @@ const ProductItems = (props: any) => {
       <p className="text-sm text-gray-300 italic">
         <b className="text-black">Desc:</b> {shoes.shortDescription}
       </p>
-      <button
-        type="button"
-        onClick={() => onViewDetail(shoes)}
-        className="rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800"
+
+      <button onClick={() =>{handleProDetail(shoes)}}
+        className="px-4 py-2 rounded-lg text-white bg-blue-700 cursor-pointer"
       >
         Detail
       </button>
