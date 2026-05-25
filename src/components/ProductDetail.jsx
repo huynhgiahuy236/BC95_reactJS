@@ -1,17 +1,19 @@
 import React from "react";
 
-const ProductDetail = ({ product, closeDetail }) => {
-  console.log(product);
+const ProductDetail = ({ product, closeDetail, onAddToCart }) => {
   if (!product) return null;
+  const handleAddToCart = () => {
+    onAddToCart(product.id);
+  }
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6" onClick={closeDetail}>
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
         {/* Ảnh sản phẩm */}
-        <div className="relative w-full h-full overflow-hidden  space-y-5" onClick={(e) => e.stopPropagation()}>
+        <div className="relative w-full  overflow-hidden  space-y-5" onClick={(e) => e.stopPropagation()}>
           <img
             src={product.img}
             alt={product.name}
-            className="w-full h-full object-cover"
+            className="w-full h-2 object-cover"
           />
           {/* Nút đóng */}
           <button
@@ -43,7 +45,10 @@ const ProductDetail = ({ product, closeDetail }) => {
             {/* Nút thêm vào giỏ — luôn luôn chỉ THÊM, không bao giờ xóa
                 Lifting State Up: click → onAddToCart(id) → App.handleAddToCart(id)
                 → App.cart[id] tăng lên 1 → cartQty prop cập nhật */}
-            <button className="flex-1 py-3 rounded-xl font-bold bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+            <button
+              onClick={handleAddToCart}
+              className="flex-1 py-3 rounded-xl font-bold bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+            >
               + Thêm vào giỏ
             </button>
 
