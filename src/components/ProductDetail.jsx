@@ -1,0 +1,63 @@
+import React from "react";
+
+const ProductDetail = ({ product, closeDetail }) => {
+  console.log(product);
+  if (!product) return null;
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6" onClick={closeDetail}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+        {/* Ảnh sản phẩm */}
+        <div className="relative w-full h-full overflow-hidden  space-y-5" onClick={(e) => e.stopPropagation()}>
+          <img
+            src={product.img}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+          {/* Nút đóng */}
+          <button
+            className="absolute top-3 right-3 bg-white/80 hover:bg-white text-gray-600 w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+            onClick={closeDetail}
+          >
+            <i className="fa-solid fa-xmark" />
+          </button>
+          {/* Badge số lượng trong giỏ — chỉ hiện khi inCart */}
+        </div>
+
+        {/* Thông tin */}
+        <div className="p-6">
+          <span className="text-xs font-semibold uppercase tracking-wider text-blue-500 bg-blue-100 px-2 py-1 rounded-full">
+            {product.type}
+          </span>
+
+          <h2 className="text-2xl font-extrabold text-gray-800 mt-3 mb-1">
+            {product.name}
+          </h2>
+
+          <p className="text-3xl font-extrabold text-blue-600 mb-1">
+            {product.price.toLocaleString("vi-VN")}₫
+          </p>
+
+          {/* Dòng trạng thái giỏ hàng */}
+
+          <div className="flex gap-3">
+            {/* Nút thêm vào giỏ — luôn luôn chỉ THÊM, không bao giờ xóa
+                Lifting State Up: click → onAddToCart(id) → App.handleAddToCart(id)
+                → App.cart[id] tăng lên 1 → cartQty prop cập nhật */}
+            <button className="flex-1 py-3 rounded-xl font-bold bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+              + Thêm vào giỏ
+            </button>
+
+            <button
+              onClick={closeDetail}
+              className="px-5 py-3 rounded-xl font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors cuspointer"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductDetail;

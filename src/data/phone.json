@@ -1,0 +1,122 @@
+[
+  {
+    "id": "1",
+    "name": "iPhone 13",
+    "price": 13500000,
+    "screen": "6.1 Super Retina XDR",
+    "backCamera": "12 MP",
+    "frontCamera": "12 MP",
+    "img": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-13_2_.png",
+    "desc": "Update",
+    "type": "iphone",
+    "quantity": 20
+  },
+  {
+    "id": "2",
+    "name": "Samsung Galaxy S23",
+    "price": 14000000,
+    "screen": "6.1 AMOLED",
+    "backCamera": "50 MP",
+    "frontCamera": "12 MP",
+    "img": "https://cdni.dienthoaivui.com.vn/x,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/samsung-galaxy-s23-plus-8gb-512gb-cu-xuoc-can-black-1.png",
+    "desc": "Update",
+    "type": "samsung",
+    "quantity": 20
+  },
+  {
+    "id": "3",
+    "name": "Xiaomi 13",
+    "price": 20000000,
+    "screen": "6.36 AMOLED",
+    "backCamera": "50 MP",
+    "frontCamera": "32 MP",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDEexwFhYxVZN-I6E-cW1_DEpIbM2tmVEdug&s",
+    "desc": "Update ver2",
+    "type": "xiaomi",
+    "quantity": 12
+  },
+  {
+    "id": "4",
+    "name": "Google Pixel 7",
+    "price": 10000000,
+    "screen": "6.3 OLED",
+    "backCamera": "50 MP",
+    "frontCamera": "10 MP",
+    "img": "https://cdn2.cellphones.com.vn/x/media/catalog/product/v/_/v_by6_1_2.jpg",
+    "desc": "Camera AI",
+    "type": "google",
+    "quantity": 0
+  },
+  {
+    "id": "5",
+    "name": "Oppo Reno8",
+    "price": 8000000,
+    "screen": "6.4 AMOLED",
+    "backCamera": "64 MP",
+    "frontCamera": "32 MP",
+    "img": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/c/o/combo_product_-_reno8_4g_-_gold.png",
+    "desc": "Thiết kế đẹp",
+    "type": "oppo",
+    "quantity": 20
+  },
+  {
+    "id": "6",
+    "name": "OnePlus 11",
+    "price": 14000000,
+    "screen": "6.7 AMOLED",
+    "backCamera": "50 MP",
+    "frontCamera": "16 MP",
+    "img": "https://cdn2.cellphones.com.vn/x/media/catalog/product/o/n/oneplus_11_-_green_-_rgb_1_1_1.jpg",
+    "desc": "Mượt, nhanh",
+    "type": "oneplus",
+    "quantity": 16
+  },
+  {
+    "id": "7",
+    "name": "iPhone 11",
+    "price": 7500000,
+    "screen": "6.1 LCD",
+    "backCamera": "12 MP",
+    "frontCamera": "12 MP",
+    "img": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone11-purple-select-2019_2_1_2_2_3.png",
+    "desc": "Giá tốt",
+    "type": "iphone",
+    "quantity": 19
+  },
+  {
+    "id": "8",
+    "name": "Samsung Galaxy A54",
+    "price": 8500000,
+    "screen": "6.4 AMOLED",
+    "backCamera": "64 MP",
+    "frontCamera": "32 MP",
+    "img": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/a/samsung-galaxy-a54-8gb-256gb.png",
+    "desc": "Tầm trung",
+    "type": "samsung",
+    "quantity": 17
+  },
+  {
+    "id": "9",
+    "name": "Xiaomi Redmi Note 12",
+    "price": 6000000,
+    "screen": "6.67 AMOLED",
+    "backCamera": "48 MP",
+    "frontCamera": "13 MP",
+    "img": "https://product.hstatic.net/1000370129/product/xiaomi_redmi_note_12_pro_den-digiphone_ea420b6f4550442785e4680d15624077_master.jpg",
+    "desc": "Pin trâu",
+    "type": "xiaomi",
+    "quantity": 13
+  },
+  {
+    "id": "10",
+    "name": "Google Pixel 6",
+    "price": 8500000,
+    "screen": "6.4 OLED",
+    "backCamera": "50 MP",
+    "frontCamera": "8 MP",
+    "img": "https://buy.gazelle.com/cdn/shop/files/Pixel_6_Pro_-_black_-_Overlap_Trans-cropped.jpg?v=1757019071",
+    "desc": "Android gốc",
+    "type": "google",
+    "quantity": 11
+  }
+]
