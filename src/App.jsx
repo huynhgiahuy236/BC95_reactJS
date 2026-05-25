@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
 import ProductCart from "./components/ProductCart";
 import Cart from "./components/Cart";
 import ProductDetail from "./components/ProductDetail";
-import data from "./data/phone.json";
+import axios, { Axios } from "axios";
+// import data from "./data/phone.json";
 const App = () => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const API_URl = "https://69cfbef7a4647a9fc675e9d2.mockapi.io/phone/phone";
+
   // state chứa keyword tìm kiếm, giỏ hàng, sản phẩm được chọn và trạng thái mở/đóng của giỏ hàng
   const [keyword, setKeyword] = useState("");
   // state chua cart, setCart la function de cap nhat cart, khoi tao cart la mot mang rong
@@ -17,6 +22,63 @@ const App = () => {
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
   // state để lưu sản phẩm được chọn để hiển thị chi tiết
   const [selectedProduct, setSelectedProduct] = useState(null);
+  // useEffect để call API lấy products
+  // param 1: callback function chứa logic call API
+  // param 2: dependency array
+  // TH1: nếu để [] thì callback chỉ chạy 1 lần sau lần render đầu tiên
+  // TH2: nếu để [keyword] thì callback sẽ chạy sau lần render đầu tiên và mỗi khi keyword đổi
+  // th1 phù hợp để call API lấy products vì ta chỉ muốn call 1 lần sau khi component được mount, không cần call lại khi keyword đổi vì việc filter sản phẩm sẽ được thực hiện ở phần render dựa trên data đã có sẵn
+  // useEffect(() => {
+  //   // bật loading để hiển thị giao diện loading trong khi chờ API trả về
+  //   setIsLoading(true);
+  //   // call API sử dụng axios
+  //   axios
+  //     .get(API_URl)
+  //     .then((response) => {
+  //       // khi API trả về thành công thì set data = response.data (dữ liệu trả về từ API)
+  //       setData(response.data);
+  //       console.log("Data fetched successfully:", response.data);
+  //     })
+  //     .catch((error) => {
+  //       // khi API trả về lỗi thì log lỗi ra console
+  //       console.error("Error fetching data:", error);
+  //     })
+  //     .finally(() => {
+  //       // khi API trả về thành công hay lỗi thì đều tắt loading
+  //       setIsLoading(false);
+  //     });
+  // }, []);
+  // th2 không phù hợp để call API lấy products vì mỗi khi keyword đổi thì callback sẽ chạy lại và gọi API, điều này không cần thiết vì việc filter sản phẩm sẽ được thực hiện ở phần render dựa trên data đã có sẵn, không cần phải gọi API lại mỗi khi keyword đổi
+  useEffect(() => {
+    axios.get(API_URl)
+      .then((response) => { 
+        setIsLoading(true);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    if (keyword === "") {
+      // nếu keyword rỗng thì gọi API lấy tất cả sản phẩm
+       setData(data);
+    } else {
+      const urlApiWithKeyword = `${API_URl}?search=${keyword}`;
+      axios.get(urlApiWithKeyword)
+        .then((response) => {
+          setData(response.data);
+          console.log("Data fetched successfully with keyword:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data with keyword:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [keyword]);
 
   const handleOpenDetail = (product) => {
     // khi click vào 1 sản phẩm → gọi handleOpenDetail(product) → App.setSelectedProduct(product) → ProductDetail nhận product làm prop và hiển thị
@@ -68,7 +130,7 @@ const App = () => {
         <Header totalQty={totalQty} onCartClick={handleOpenCart} />
         <SearchBar onSearch={(keyword) => handleSearch(keyword)} />
         <div className="grid grid-cols-3 gap-5 border border-gray-300 rounded-2xl">
-          {filterProduct.map((product) => (
+          {data.map((product) => (
             <ProductCart
               key={product.id}
               product={product}
