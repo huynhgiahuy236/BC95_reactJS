@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./layouts/ProtectedRouter";
 import GuestRouter from "./layouts/GuestRoute";
+import Home from "./pages/Home";
 // LUU Y
 // app nay chi define cac router
 // VD: /home, /about, /contact, /products, /services, /blog, /login, /register, /profile, /settings, /dashboard, /admin, /user/:id, /search?q=keyword
@@ -27,12 +28,13 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* trong nay se define cac router, vd: /home, /about, /contact, /products, /services, /blog, /login, /register, /profile, /settings, /dashboard, /admin, /user/:id, /search?q=keyword */}
-
+          
           {/* <Route path="/product" element={<Product />} /> */}
           {/* lý thuyết 1: nested routes */}
           <Route path="/" element={<MainLayout />}>
             {/* them route check nua de chan user khong vao duoc page login va register neu da login roi */}
             {/* GuestRouter */}
+            <Route path="/" element={<Home/>}></Route>
             <Route
               path="/login"
               element={
@@ -45,7 +47,7 @@ const App = () => {
             <Route path="about" element={<About />} />
             <Route path="product" element={<Product />} />
             <Route path="profile" element={<Profile />} />
-          </Route>
+          
           {/* enpoint /admin se duoc bao ve bang protectedRoute, chi co user co role la admin moi co the truy cap duoc */}
           <Route
             path="/admin"
@@ -55,6 +57,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          </Route>
           {/* /* nếu không khớp bất kì enpoint nào sẽ đi vào page not found, luôn đứng ở cuối cùng */}
           <Route path="/*" element={<NotFound />} />
           {/* lý thuyết 2: protected routes */}

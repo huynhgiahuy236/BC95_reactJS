@@ -1,6 +1,77 @@
 import React from "react";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+// yup: thư viện hỗ trợ validate form
+// formik: thư viện hỗ trợ quản lý form, kết hợp với yup để validate form
+// formik:
+// lưu trữ giá trị của form trong state của formik
+// theo dõi sự thay đổi của form thông qua onChange, onBlur
+// onBlur: sự kiện khi người dùng rời khỏi input, thường dùng để validate form
+// hiển thị error message khi validate form không thành công
+// xử lý submit form thông qua onSubmit của formik
+
+// Mock data user infor: admin, user
+const MOCK_USERS = [
+  {
+    id: 1,
+    username: "admin",
+    email: "admin@example.com",
+    password: "Admin@123",
+    role: "admin",
+  },
+  {
+    id: 2,
+    username: "user",
+    email: "user@example.com",
+    password: "user123",
+    role: "user",
+  },
+];
+// Định nghĩa yup schema để valida  te form
+const loginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain only letters and numbers",
+    )
+    .required("Password is required"),
+});
 
 const Login = () => {
+  const navigate = useNavigate();
+  // define formik form can 3 tham số: initialValues, validationSchema, onSubmit
+  // initialValues: giá trị ban đầu của form
+  // validationSchema: schema để validate form
+  // onSubmit: hàm được gọi khi form được submit
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      // values: giá trị của form khi submit chua email và password
+      // xử lý logic đăng nhập ở đây, ví dụ: gọi API để xác thực người dùng
+      // check if email and password match with mockuser
+      const user = MOCK_USERS.find(
+        (u) => u.email === values.email && u.password === values.password,
+      );
+      if (!user) {
+        alert("Invalid email or password");
+      } else {
+        // lưu thông tin user vào localStorage để sử dụng cho các lần truy cập sau
+        // vi localStorage chỉ lưu được string nên cần convert user object thành string trước khi lưu
+        localStorage.setItem("user", JSON.stringify(user));
+        // redirect về trang home sau khi đăng nhập thành công
+        navigate("/");
+      }
+    },
+  });
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Left Section */}
@@ -103,7 +174,6 @@ const Login = () => {
             </button>
             <div className="flex gap-4">
               <button className="flex-1  h-12 border border-gray-200 rounded-md hover:bg-gray-50">
-                {" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={24}
@@ -111,16 +181,15 @@ const Login = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokewidth={2}
-                  strokelinecap="round"
-                  strokelinejoin="round"
-                  classname="text-blue-600"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-blue-600"
                 >
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                 </svg>
               </button>
               <button className="flex-1 h-12 border border-gray-200 rounded-md hover:bg-gray-50">
-                {" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={24}
@@ -128,10 +197,10 @@ const Login = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokewidth={2}
-                  strokelinecap="round"
-                  strokelinejoin="round"
-                  classname="text-gray-800"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-gray-800"
                 >
                   <path d="M9 7c-3 0-4 3-4 5.5 0 3 2 7.5 5 7.5 1.5 0 2.5-.5 3.5-1.5" />
                   <path d="M9 12h13" />
@@ -140,7 +209,7 @@ const Login = () => {
               </button>
             </div>
           </div>
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <div className="space-y-6">
               <div className="space-y-2">
                 <label
@@ -150,11 +219,29 @@ const Login = () => {
                   Enter your username or email address
                 </label>
                 <input
+                  {...formik.getFieldProps("email")}
+                  // getFieldProps return ve 4 props la value, onChange, onBlur, name, khi spread vao input thi input se tu dong nhan cac props nay de theo doi gia tri va su thay doi cua input
+                  // ... => dan trai ra thanh kieu:
+                  // value={formik.values.email}
+                  // onChange={formik.handleChange}
+                  // onBlur={formik.handleBlur}
+                  // name="email"
                   id="email"
                   type="text"
                   placeholder="Username or email address"
                   className="w-full h-12 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
+                {/* // hiển thị error message khi validate form không thành công */}
+                {
+                  // touched: đã tương tác với input hay chưa (onBlur)
+                  // ý nghĩa: nếu user đã tương tác với input và có lỗi validate từ yup
+                  // => hiển thị error message
+                  formik.touched.email && formik.errors.email && (
+                    <div className="text-sm text-red-500 mt-1">
+                      {formik.errors.email}
+                    </div>
+                  )
+                }
               </div>
               <div className="space-y-2">
                 <label
@@ -164,11 +251,18 @@ const Login = () => {
                   Enter your Password
                 </label>
                 <input
+                  {...formik.getFieldProps("password")}
                   id="password"
                   type="password"
                   placeholder="Password"
                   className="w-full h-12 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
+                {/* hiển thị error message khi validate form không thành công */}
+                {formik.touched.password && formik.errors.password && (
+                  <div className="text-sm text-red-500 mt-1">
+                    {formik.errors.password}
+                  </div>
+                )}
                 <div className="text-right">
                   <a href="#" className="text-blue-500 text-sm">
                     Forgot Password
