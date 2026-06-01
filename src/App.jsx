@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./layouts/ProtectedRouter";
+import GuestRouter from "./layouts/GuestRoute";
 // LUU Y
 // app nay chi define cac router
 // VD: /home, /about, /contact, /products, /services, /blog, /login, /register, /profile, /settings, /dashboard, /admin, /user/:id, /search?q=keyword
@@ -30,7 +31,16 @@ const App = () => {
           {/* <Route path="/product" element={<Product />} /> */}
           {/* lý thuyết 1: nested routes */}
           <Route path="/" element={<MainLayout />}>
-            <Route path="/login" element={<Login />} />
+            {/* them route check nua de chan user khong vao duoc page login va register neu da login roi */}
+            {/* GuestRouter */}
+            <Route
+              path="/login"
+              element={
+                <GuestRouter>
+                  <Login />
+                </GuestRouter>
+              }
+            ></Route>
             <Route path="/register" element={<Register />} />
             <Route path="about" element={<About />} />
             <Route path="product" element={<Product />} />
@@ -40,7 +50,7 @@ const App = () => {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiresRole="admin">
                 <AdminLayout />
               </ProtectedRoute>
             }

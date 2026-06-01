@@ -1,7 +1,10 @@
-import React from "react";
+import React, { use, useState } from "react";
 import { NavLink } from "react-router-dom";
 
+// lay info user tu localStorage de hien thi tren header
+const user = JSON.parse(localStorage.getItem("user"));
 const Header = () => {
+  const [users, setUsers] = useState(user);
   return (
     <header className="bg-blue-900 text-white fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
@@ -58,6 +61,11 @@ const Header = () => {
             >
               Get in Touch
             </NavLink>
+            {users && (
+              <NavLink to="/admin" className="ml-4 text-sm text-gray-300">
+                Admin {users.name}
+              </NavLink>
+            )}
           </div>
           {/* Mobile Menu Button (for smaller screens) */}
           <div className="md:hidden flex items-center">

@@ -4,7 +4,8 @@
 // => redirect về trang login
 import { Navigate } from "react-router-dom";
 
-const protectedRoute = ({ children }) => {
+const protectedRoute = ({ children,requiresRole }) => {
+  // requiresRole được truyền từ App.jsx, là tham số để kiểm tra role của user, nếu user có role phù hợp thì cho phép truy cập, ngược lại thì redirect về trang login hoặc trang home
   // children là component mà mình muốn bảo vệ, ví dụ AdminLayout,
   // la tham so bat buoc phai co khi su dung protectedRoute
   // khong duoc doi ten children thanh ten khac, vi no la props mac dinh cua react
@@ -13,6 +14,10 @@ const protectedRoute = ({ children }) => {
 
   // nếu user không tồn tại hoặc không có role là admin thì redirect về trang login
   if (!user) {
+    return <Navigate to="/login"  />;
+  }
+  // kiem tra role cua user
+  if(requiresRole && user.role !== requiresRole){
     return <Navigate to="/login"  />;
   }
   return children;
