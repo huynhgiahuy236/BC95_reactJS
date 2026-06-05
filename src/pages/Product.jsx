@@ -1,108 +1,116 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { PRODUCT_URL } from "../constants";
 
-const Product = () => {
+const Products = () => {
+  const [products, setProducts] = useState([]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const keyword = searchParams.get("keyword") || "";
+  console.log("keyword: ", keyword);
+
+  // useEffect để gọi API
+  useEffect(() => {
+    // B1: gọi API => axios
+    axios
+      .get(PRODUCT_URL)
+      .then((res) => {
+        console.log(res.data);
+        setProducts(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      })
+      .finally(() => {});
+  }, []);
+
+  const updateSearchParams = (key, value) => {
+    // ....?keyword=áo&category=iphone&sort=asc
+    // B1: lấy tất cả search params hiện tại => chuyển thành object
+    // {keyword: "áo", category: "iphone", sort: "asc"}
+    const paramsObj = Object.fromEntries([...searchParams]);
+    // B2: cập nhật key cần thay đổi
+    paramsObj[key] = value;
+    // B3: chuyển object thành search params => cập nhật lại URL
+    setSearchParams(paramsObj);
+  };
+
   return (
-    <div className="bg-gray-100 dark:bg-gray-800 py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row -mx-4">
-          <div className="md:flex-1 px-4">
-            <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-              <img
-                className="w-full h-full object-cover"
-                src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
-                alt="Product Image"
-              />
-            </div>
-            <div className="flex -mx-2 mb-4">
-              <div className="w-1/2 px-2">
-                <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
-                  Add to Cart
-                </button>
-              </div>
-              <div className="w-1/2 px-2">
-                <button className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
-                  Add to Wishlist
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="md:flex-1 px-4">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-              Product Name
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed
-              ante justo. Integer euismod libero id mauris malesuada tincidunt.
-            </p>
-            <div className="flex mb-4">
-              <div className="mr-4">
-                <span className="font-bold text-gray-700 dark:text-gray-300">
-                  Price:
-                </span>
-                <span className="text-gray-600 dark:text-gray-300">$29.99</span>
-              </div>
-              <div>
-                <span className="font-bold text-gray-700 dark:text-gray-300">
-                  Availability:
-                </span>
-                <span className="text-gray-600 dark:text-gray-300">
-                  In Stock
-                </span>
-              </div>
-            </div>
-            <div className="mb-4">
-              <span className="font-bold text-gray-700 dark:text-gray-300">
-                Select Color:
-              </span>
-              <div className="flex items-center mt-2">
-                <button className="w-6 h-6 rounded-full bg-gray-800 dark:bg-gray-200 mr-2" />
-                <button className="w-6 h-6 rounded-full bg-red-500 dark:bg-red-700 mr-2" />
-                <button className="w-6 h-6 rounded-full bg-blue-500 dark:bg-blue-700 mr-2" />
-                <button className="w-6 h-6 rounded-full bg-yellow-500 dark:bg-yellow-700 mr-2" />
-              </div>
-            </div>
-            <div className="mb-4">
-              <span className="font-bold text-gray-700 dark:text-gray-300">
-                Select Size:
-              </span>
-              <div className="flex items-center mt-2">
-                <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                  S
-                </button>
-                <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                  M
-                </button>
-                <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                  L
-                </button>
-                <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                  XL
-                </button>
-                <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                  XXL
-                </button>
-              </div>
-            </div>
-            <div>
-              <span className="font-bold text-gray-700 dark:text-gray-300">
-                Product Description:
-              </span>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed
-                ante justo. Integer euismod libero id mauris malesuada
-                tincidunt. Vivamus commodo nulla ut lorem rhoncus aliquet. Duis
-                dapibus augue vel ipsum pretium, et venenatis sem blandit.
-                Quisque ut erat vitae nisi ultrices placerat non eget velit.
-                Integer ornare mi sed ipsum lacinia, non sagittis mauris
-                blandit. Morbi fermentum libero vel nisl suscipit, nec tincidunt
-                mi consectetur.
-              </p>
-            </div>
-          </div>
+    <main className="pt-20 pb-16">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">
+          Danh sách sản phẩm
+        </h1>
+        {/* Thanh tìm kiếm + filter
+     useSearchParams: ?keyword=áo&category=Áo&sort=price-asc */}
+        <div className="flex flex-wrap gap-3 mb-6">
+          {/* ?keyword= */}
+          <input
+            type="text"
+            placeholder="Tìm kiếm sản phẩm..."
+            defaultValue="áo"
+            // vì updateSearchParams có tham số nên phải code kiểu () => updateSearchParams(...)
+            onChange={(e) => updateSearchParams("keyword", e.target.value)}
+            className="flex-1 min-w-48 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {/* ?category= */}
+          <select
+            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => updateSearchParams("category", e.target.value)}
+          >
+            <option value="all">Tất cả</option>
+            <option value="iphone">iphone</option>
+            <option value="samsung">Samsung</option>
+          </select>
+          {/* ?sort= */}
+          <select
+            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => updateSearchParams("sort", e.target.value)}
+          >
+            <option value="asc">Giá tăng dần</option>
+            <option value="desc">Giá giảm dần</option>
+          </select>
         </div>
+        {/* Kết quả tìm kiếm */}
+        <p className="text-sm text-gray-500 mb-4">
+          Tìm thấy <strong>2</strong> sản phẩm với từ khóa "<strong>áo</strong>"
+        </p>
+        {/* Grid sản phẩm — mỗi card Link đến /product/:id (useParams) */}
+        {/* TH1: có sản phẩm -> length > 0 */}
+
+        {products.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            {/* map để render data */}
+            {products.map((product) => (
+              <Link
+                to={`/product/${product.id}`}
+                className="block p-4 bg-white rounded-lg shadow hover:shadow-md border border-gray-100 transition-shadow"
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {product.name}
+                    </p>
+                    <p className="text-xs text-blue-600 mt-1">{product.type}</p>
+                    <p className="text-xs text-gray-400 mt-1">{product.desc}</p>
+                  </div>
+                  <span className="text-blue-600 font-bold text-sm whitespace-nowrap ml-2">
+                    {product.price?.toLocaleString()}đ
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">Không tìm thấy sản phẩm nào.</p>
+        )}
+
+        {/* TH2: không có sản phẩm -> length === 0 */}
       </div>
-    </div>
+    </main>
   );
 };
 
-export default Product;
+export default Products;

@@ -1,0 +1,1 @@
+export const PRODUCT_URL = "https://69cfbef7a4647a9fc675e9d2.mockapi.io/phone/phone";

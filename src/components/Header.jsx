@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import { logout, selectCurrentUser } from "../store/slices/userSlices";
 // lấy info user từ localStorage
 // VÌ thời gian lưu user vào localStorage chậm hơn thời gian
 // lấy user của Header nên sẽ có trường hợp user bị null khi lần đầu render Header
@@ -14,20 +15,24 @@ import { NavLink, useNavigate } from "react-router-dom";
 // sau khi login thành công => lưu user vào localStorage
 // chuyển sang trang / => gọi hàm getUser để lấy user infor mới nhất
 // => cập nhật lại state userInfo => Header re-render => hiển thị tên user ở header
-const getUser = () => JSON.parse(localStorage.getItem("user"));
+// const getUser = () => JSON.parse(localStorage.getItem("user"));
 const Header = () => {
-  const [users, setUsers] = useState(getUser);
+  const [users, setUsers] = useState({});
+  const dispatch = useDispatch()
+  const userInfo = useSelector(selectCurrentUser)
   const navigate = useNavigate();
   const handleLogout = () => {
     // xoa user info trong localStorage khi click logout
-    localStorage.removeItem("user");
+    // localStorage.removeItem("user");
     // cap nhat state user thanh null de cap nhat giao dien
-    setUsers(null);
+    // setUsers(null);
     // redirect ve trang home sau khi logout, tuy vao nghiep vu projext ma co the redirect ve trang login, home, about, product, profile, contact, ...
     // window.location.href = "/"; // cach 1: dung window.location.href de redirect, cach nay se load lai toan bo trang web
+    dispatch(logout())
     // cach 2: dung useNavigate hook cua react-router-dom de redirect, cach nay se khong load lai toan bo trang web, chi cap nhat giao dien
     // const navigate = useNavigate();
-    // navigate("/"); // redirect ve trang home sau khi logout\\
+    // navigate("/"); // redirect ve trang home sau khi logout
+  
     navigate("/"); // redirect ve trang home sau khi logout
   };
   return (
@@ -63,14 +68,8 @@ const Header = () => {
             >
               Profile
             </NavLink>
-            <NavLink
-              to="/Contact"
-              className="hover:text-gray-300 transition-all"
-            >
-              Contact
-            </NavLink>
             {/* #> Admin chỉ hiển thị khi user có role là admin */}
-            {getUser() && getUser().role === "admin" && (
+            {users && users.role === "admin" && (
               <NavLink
                 to="/Admin"
                 className="hover:text-gray-300 transition-all"
@@ -94,10 +93,10 @@ const Header = () => {
               Get in Touch
             </NavLink>
             {/* neu co user infor ==> hien ten user va nut logout */}
-            {getUser() ? (
+            {users ? (
               <div className=" items-center gap-4 ml-4">
                 <span className="text-white font-medium">
-                  {getUser().name || "User"}
+                  {users.name || "User"}
                 </span>
                 <button
                   className="bg-red-500 hover:bg-red-400 text-white py-1 px-4 rounded-full text-sm transition-all"

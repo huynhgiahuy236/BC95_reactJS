@@ -11,6 +11,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./layouts/ProtectedRouter";
 import GuestRouter from "./layouts/GuestRoute";
 import Home from "./pages/Home";
+import ProductDetail from "./pages/ProductDetail";
 // LUU Y
 // app nay chi define cac router
 // VD: /home, /about, /contact, /products, /services, /blog, /login, /register, /profile, /settings, /dashboard, /admin, /user/:id, /search?q=keyword
@@ -28,13 +29,13 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* trong nay se define cac router, vd: /home, /about, /contact, /products, /services, /blog, /login, /register, /profile, /settings, /dashboard, /admin, /user/:id, /search?q=keyword */}
-          
+
           {/* <Route path="/product" element={<Product />} /> */}
           {/* lý thuyết 1: nested routes */}
           <Route path="/" element={<MainLayout />}>
             {/* them route check nua de chan user khong vao duoc page login va register neu da login roi */}
             {/* GuestRouter */}
-            <Route path="/" element={<Home/>}></Route>
+            <Route path="/" element={<Home />}></Route>
             <Route
               path="/login"
               element={
@@ -43,20 +44,24 @@ const App = () => {
                 </GuestRouter>
               }
             ></Route>
+            {/* define param:*/}
+            {/* dấu : -> xác định param */}
+            {/* sau dấu : là tên của param, đặt tên nào cũng được */}
+            <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/register" element={<Register />} />
             <Route path="about" element={<About />} />
             <Route path="product" element={<Product />} />
             <Route path="profile" element={<Profile />} />
-          
-          {/* enpoint /admin se duoc bao ve bang protectedRoute, chi co user co role la admin moi co the truy cap duoc */}
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute requiresRole="admin">
-                <AdminLayout />
-              </ProtectedRoute>
-            }
-          />
+
+            {/* enpoint /admin se duoc bao ve bang protectedRoute, chi co user co role la admin moi co the truy cap duoc */}
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute requiresRole="admin">
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           {/* /* nếu không khớp bất kì enpoint nào sẽ đi vào page not found, luôn đứng ở cuối cùng */}
           <Route path="/*" element={<NotFound />} />
