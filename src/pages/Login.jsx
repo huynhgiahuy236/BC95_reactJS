@@ -3,6 +3,8 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { login } from "../store/slices/userSlices";
+
 // yup: thư viện hỗ trợ validate form
 // formik: thư viện hỗ trợ quản lý form, kết hợp với yup để validate form
 // formik:
@@ -68,7 +70,7 @@ const Login = () => {
       } else {
         // lưu thông tin user vào localStorage để sử dụng cho các lần truy cập sau
         // vi localStorage chỉ lưu được string nên cần convert user object thành string trước khi lưu
-        localStorage.setItem("user", JSON.stringify(user));
+        // localStorage.setItem("user", JSON.stringify(user));
         // redirect về trang home sau khi đăng nhập thành công
         dispatch(login(user));
         navigate("/");

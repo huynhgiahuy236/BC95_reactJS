@@ -1,4 +1,5 @@
-import React, { use, useEffect, useState } from "react";
+import  { use, useEffect, useState } from "react";
+import React from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout, selectCurrentUser } from "../store/slices/userSlices";
@@ -17,7 +18,7 @@ import { logout, selectCurrentUser } from "../store/slices/userSlices";
 // => cập nhật lại state userInfo => Header re-render => hiển thị tên user ở header
 // const getUser = () => JSON.parse(localStorage.getItem("user"));
 const Header = () => {
-  const [users, setUsers] = useState({});
+  // const [users, setUsers] = useState({});
   const dispatch = useDispatch()
   const userInfo = useSelector(selectCurrentUser)
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const Header = () => {
               Profile
             </NavLink>
             {/* #> Admin chỉ hiển thị khi user có role là admin */}
-            {users && users.role === "admin" && (
+            {userInfo && userInfo.role === "admin" && (
               <NavLink
                 to="/Admin"
                 className="hover:text-gray-300 transition-all"
@@ -93,10 +94,10 @@ const Header = () => {
               Get in Touch
             </NavLink>
             {/* neu co user infor ==> hien ten user va nut logout */}
-            {users ? (
+            {userInfo ? (
               <div className=" items-center gap-4 ml-4">
                 <span className="text-white font-medium">
-                  {users.name || "User"}
+                  {userInfo.name || "User"}
                 </span>
                 <button
                   className="bg-red-500 hover:bg-red-400 text-white py-1 px-4 rounded-full text-sm transition-all"
