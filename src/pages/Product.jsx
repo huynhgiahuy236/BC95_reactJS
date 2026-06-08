@@ -5,11 +5,9 @@ import { PRODUCT_URL } from "../constants";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const keyword = searchParams.get("keyword") || "";
-  console.log("keyword: ", keyword);
 
   // useEffect để gọi API
   useEffect(() => {

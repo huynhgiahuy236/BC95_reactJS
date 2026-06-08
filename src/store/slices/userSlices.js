@@ -3,7 +3,8 @@
 // 2. reducers: là nơi nhận action từ các component hoặc page
 // => cập nhật lại state của user
 // 3. selectors: là nơi định nghĩa các hàm để lấy dữ liệu từ state của user
-
+// store: la noi luu tru toan bo state cua ung dung, VA CHI DUOC UPDATE STATE
+// KHONG NEN xu li logic phuc tap nhu goi api, tinh toan du lieu, cap nhat trong localStorege,... trong reducer cua slice 
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
@@ -20,7 +21,7 @@ const userSlice = createSlice({
         login: (state, action) => {
             state.currentUser = action.payload
             // lưu thông tin user vào localStorage
-            localStorage.setItem('user', JSON.stringify(action.payload))
+            // localStorage.setItem('user', JSON.stringify(action.payload))
         },
         // action 2: logout
         logout: (state, action) => {
