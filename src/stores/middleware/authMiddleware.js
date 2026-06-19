@@ -6,13 +6,14 @@ export const authMiddleware = (stores) => (next) => (action) => {
     const { type, payload } = action
     switch (type) {
         case "auth/login":
-            localStorage.getItem("user", JSON.stringify(payload))
+            localStorage.setItem("user", JSON.stringify(payload))
             break
         case "auth/logout":
-            localStorage.removeItem("user", JSON.stringify(payload))
+            localStorage.removeItem("user")
+            localStorage.removeItem("accessToken");
             break
         default:
             break
     }
-    next(action)
+    return next(action)
 }

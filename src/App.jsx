@@ -8,6 +8,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { stores } from "./stores/store.js";
+import AdminLayout from "./layouts/AdminLayout.jsx";
+import UserListPage from "./pages/admin/UserListPage.jsx";
+import CinemaPage from "./pages/CinemaPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute.jsx";
 
 // cai dat query client o ngoai app.jsx de tat ca component hoac page deu co the dung duoc
 const queryClient = new QueryClient({
@@ -33,6 +39,26 @@ const App = () => {
               <Route index element={<MovieListPage />}></Route>
               <Route path="movie" element={<MovieListPage />}></Route>
               <Route path="movie/:maPhim" element={<MovieDetailPage />}></Route>
+              <Route path="cinema" element={<CinemaPage />}></Route>
+              <Route
+                path="profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              ></Route>
+            </Route>
+            {/* admin route */}
+            <Route
+              path="/admin"
+              element={
+                <ProtectedAdminRoute>
+                  <AdminLayout />
+                </ProtectedAdminRoute>
+              }
+            >
+              <Route path="users" element={<UserListPage />}></Route>
             </Route>
             <Route path="*" element={<NotFoundPage />}></Route>
           </Routes>

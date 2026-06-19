@@ -6,6 +6,7 @@ import { logout, selectorIsLoggedIn, selectorUser } from "../stores/authSlice";
 const Header = () => {
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const user = useSelector(selectorUser);
+  console.log(user)
   const dispatch = useDispatch();
   const hanldeLogout = () => {
     dispatch(logout());
@@ -25,9 +26,9 @@ const Header = () => {
               <div>
                 <span className="text-sm text-gray-300">
                   Xin chào,{" "}
-                  <span className="text-yellow-400 font-medium">
-                    {user?.name}
-                  </span>
+                  <Link to="/profile" className="text-yellow-400 font-medium">
+                    {user?.hoTen}
+                  </Link>
                 </span>
                 <button
                   onClick={hanldeLogout}

@@ -29,13 +29,13 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setApiError(""); // reset loi cu truoc khi goi Api
       try {
+        localStorage.clear();
         const res = await authApi.login(values);
         // dispatch
         dispatch(login(res.data.content));
         navigate("/"); // dieu huong ve trang chu
       } catch (error) {
-        console.log(error, "edu");
-        setApiError(error.res?.data?.message);
+        setApiError(error.response?.data?.message || "Có lỗi xảy ra");
       }
     },
   });
