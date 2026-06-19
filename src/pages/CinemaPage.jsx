@@ -14,7 +14,7 @@ const CinemaPage = () => {
   const handleSelectedCinema = (maHeThongRap) => {
     setSelectedCinema(maHeThongRap);
   };
-  console.log("selectedCinema =", selectedCinema);
+
   const selectedCinemaInfo = listHeThongRap?.find(
     (item) => item.maHeThongRap === selectedCinema,
   );
@@ -103,10 +103,12 @@ const CinemaPage = () => {
                         className="bg-gray-800 rounded-xl p-5 border border-gray-700 hover:border-yellow-400/40 transition-colors"
                       >
                         <h3 className="text-white font-semibold text-lg">
-                          hnn
+                          {cumRap.tenCumRap}
                         </h3>
 
-                        <p className="text-gray-400 text-sm mt-2">📍 nmnn</p>
+                        <p className="text-gray-400 text-sm mt-2">
+                          📍 {cumRap.diaChi}
+                        </p>
                       </div>
                     ))}
                   </div>

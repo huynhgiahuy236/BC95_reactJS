@@ -6,7 +6,7 @@ import { logout, selectorIsLoggedIn, selectorUser } from "../stores/authSlice";
 const Header = () => {
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const user = useSelector(selectorUser);
-  console.log(user)
+ 
   const dispatch = useDispatch();
   const hanldeLogout = () => {
     dispatch(logout());

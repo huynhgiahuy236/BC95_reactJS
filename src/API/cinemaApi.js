@@ -5,7 +5,7 @@ export const cinemaApi = {
         return axiosInstance.get(`QuanLyRap/LayThongTinHeThongRap`)
     },
     getCumRapTheoHeThong: (maHeThongRap) => {
-        return axiosInstance.get(`/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`)
+        return axiosInstance.get(`QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`)
     }
 }
 export default cinemaApi
