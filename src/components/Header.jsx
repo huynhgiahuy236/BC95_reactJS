@@ -2,13 +2,19 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout, selectorIsLoggedIn, selectorUser } from "../stores/authSlice";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Header = () => {
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const user = useSelector(selectorUser);
- 
+
   const dispatch = useDispatch();
+
+  // dung de tuong tac voi cache cua ReactQuery
+  const queryClient = useQueryClient();
+
   const hanldeLogout = () => {
+    queryClient.removeQueries({queryKey:['profile']})
     dispatch(logout());
   };
   return (
@@ -24,8 +30,8 @@ const Header = () => {
           <nav className="flex items-center gap-6">
             {isLoggedIn ? (
               <div>
-                <span className="text-sm text-gray-300">
-                  Xin chào,{" "}
+                <span className="text-sm text-gray-300 pr-3">
+                  Xin chào, {" "} 
                   <Link to="/profile" className="text-yellow-400 font-medium">
                     {user?.hoTen}
                   </Link>

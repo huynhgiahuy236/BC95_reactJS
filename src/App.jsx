@@ -14,6 +14,8 @@ import CinemaPage from "./pages/CinemaPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.jsx";
+import FilmPage from "./pages/admin/FilmPage.jsx";
+import FilmSchadule from "./pages/admin/FilmSchadule.jsx";
 
 // cai dat query client o ngoai app.jsx de tat ca component hoac page deu co the dung duoc
 const queryClient = new QueryClient({
@@ -58,7 +60,10 @@ const App = () => {
                 </ProtectedAdminRoute>
               }
             >
+              <Route index element={<UserListPage />}></Route>
               <Route path="users" element={<UserListPage />}></Route>
+              <Route path="films" element={<FilmPage />}></Route>
+              <Route path="schadule" element={<FilmSchadule />}></Route>
             </Route>
             <Route path="*" element={<NotFoundPage />}></Route>
           </Routes>

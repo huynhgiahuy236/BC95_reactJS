@@ -9,5 +9,18 @@ export const userApi = {
     // lay thong tin nguoi dung
     getProfile: () => {
         return axiosInstance.post(`/QuanLyNguoiDung/ThongTinTaiKhoan`)
-    }
+    },
+    addUser: (userData) => {
+        //         {
+        //   "taiKhoan": "string",
+        //   "matKhau": "string",
+        //   "email": "string",
+        //   "soDt": "string",
+        //   "maNhom": "string",
+        //   "maLoaiNguoiDung": "string",
+        //   "hoTen": "string"
+        // }
+        return axiosInstance.post(`/QuanLyNguoiDung/ThemNguoiDung`, userData)
+    },
+    
 }

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import useProfile from "../hooks/useUser";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useSelector } from "react-redux";
 import { selectorIsLoggedIn } from "../stores/authSlice";
 import { Link } from "react-router-dom";
+import { useProfile } from "../hooks/useUser";
 const ProfilePage = () => {
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const { data: profile, isLoading, isError } = useProfile(isLoggedIn);
